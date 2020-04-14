@@ -1,20 +1,36 @@
-# quarantine_advices_bot
-Telegram bot made for advising people, what to do, to read, to listen, to watch or to drink on quarantine
+# @StayHomeAndChillBot
+Карантинный телеграмм бот, созданный для обмена советами между пользователями по группам: что посмотреть, что почитать, что послушать, чем заняться, что выпить (18+)
+Ознакомиться можно по ссылке: http://t.me/StayHomeAndChillBot
+Видео по работе с ботом: https://github.com/Quite-Right/quarantine_advices_bot/blob/master/readme_content/2020-04-14-20-23-20.mp4
 
-## How to work width the bot:
-Change values in keys.js file:
-- TOKEN will be your telegram bot token
-- uri will be your mongoDB URI
-- adm will be the person to moderate the advices
-## Architecture
-###Adding advice
-When someone trys to add an advice to the bot group the following actions will be done:
-1.  Person gives an advice to the group of advices he want to expand
-2.  Administrator of the bot receives the info about the advice, checks it for adequacy and decides, whether to add the advice or not
-3. The advice is beeing added/rejected, if it's being added it's voice message id wil be written to the groups  .txt file
+Функционал:
+-получение совета
+-отправка совета
+-модерация отправленных советов
+-сбор статистики по дням
+-хранение базы данных пользователей, их сессий
 
-###Getting advice
-When someone trys to get an advice to the bot group the following actions will be done:
-1.  Person chooses the category of advice to get
-2.  Bot gives person one of the advices from the database (it must be an advice, which weren't given one advice before, there is a check, so minimum for bot to work are to advices per group)
-3. Person chooses, wheter to get another advice or not
+## Как запустить бота?
+Изменить параметры в файле keys.js
+- TOKEN - токен телеграмм бота
+- uri - mongoDB URI
+- adm - id пользователя (число), который будет администрировать советы (прослушивать их и решать, добавить ли совет или нет)
+Написать npm install (должна быть установлена Node JS)
+Написать node index.js
+
+## Процесс добавления совета со стороны пользователя:
+- пользователь заходит в бота выбирает раздел добавления совета
+- пользователь выбирает группу, для которой добавить совет
+- от пользователя на вход ожидается голосовое сообщение, в случае успешного получения совет совет отправляется на модерацию админу бота, а пользователю предлагают записать еще один совет, если же пользователь отправил сообщение иного типа, ему предлагают записать голосовое сообщение
+
+## Процесс получения совета со стороны пользователя:
+- пользователь заходит в бота выбирает раздел получения совета
+- пользователь выбирает группу, в рамках которой получить совет
+- если выбрана группа, требующая подтверждения возраста, пользователю высвечивается "окно" подтверждения
+- пользователь получает совет, при этом совет сохраняется, как последний полученный в сессию пользователя, чтобы следующий полученный им совет был отличен от предыдущего
+
+## Администрирование бота
+- пользователь с id администратора получает уведомления о новых советах и группах, для которых они добавляются, он может прослушать получаемый совет и решить добавить совет или нет (и нажать сооответсвующую кнопку в боте), id совета записывается в соответствующий группе файл
+![](https://github.com/Quite-Right/quarantine_advices_bot/blob/master/readme_content/adm_1.png)
+- пользователь с id администратора получает уведомления раз в день в 7 часов вечера получает статистику по боту
+![](https://github.com/Quite-Right/quarantine_advices_bot/blob/master/readme_content/adm_2.png)
